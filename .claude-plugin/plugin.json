@@ -6,6 +6,8 @@
     "name": "Robert Nealan",
     "email": "robertnealan@gmail.com"
   },
+  "homepage": "https://github.com/robotnealan/frank",
+  "repository": "https://github.com/robotnealan/frank",
   "license": "MIT",
   "keywords": [
     "3d-modeling",

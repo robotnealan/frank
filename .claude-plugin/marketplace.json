@@ -2,10 +2,10 @@
   "name": "frank-marketplace",
   "owner": {
     "name": "Robert Nealan",
-    "url": "https://github.com/robertnealan"
+    "url": "https://github.com/robotnealan"
   },
   "metadata": {
-    "description": "Local marketplace for the frank 3D-modeling plugin",
+    "description": "Marketplace for the frank 3D-modeling plugin",
     "version": "1.0.0"
   },
   "plugins": [
