@@ -22,7 +22,7 @@ Same pattern as RhinoMCP/BlenderMCP: an in-app **socket server** running inside 
 | `create_node` | `(node_type, parent_path="/obj", name=None)` | Create a node at a network path. |
 | `execute_houdini_code` | `(code: str)` | Run arbitrary Python in Houdini's `hou` environment. **The primary build & introspection tool.** |
 | `render_single_view` | `(orthographic=False, rotation=[0,90,0], render_path, render_engine, karma_engine)` | Render one view to an image file. |
-| `render_quad_views` | `(render_path, render_engine, karma_engine)` | Render four canonical views at once. **Primary review capture.** |
+| `render_quad_views` | `(render_path, render_engine, karma_engine)` | Render four canonical views at once. **⛔ BANNED for frank — deadlocks the server (see Capture POLICY); use `render_single_view`.** |
 | `render_specific_camera` | `(camera_path, render_path, render_engine, karma_engine)` | Render from a named camera. |
 | `opus_get_model_names` | `()` | List OPUS procedural-asset names (optional). |
 | `opus_get_model_params_schema` | `(structure)` | OPUS model param schema (optional). |
@@ -48,7 +48,7 @@ Same pattern as RhinoMCP/BlenderMCP: an in-app **socket server** running inside 
   wr.parm("snippet").set('@P.y += sin(@P.x*3.0)*0.2;')
   ```
   **Idempotency** = delete and rebuild only frank's own subnet each run; never touch sibling networks.
-- **`frank-review`** → `render_quad_views` (or `render_single_view` at a matched `rotation`) to a temp path, then Read the image(s) and compare to the reference via `frank-silhouette-critic`. Houdini renders to **files** (no inline screenshot return), so capture = render-to-path → read file.
+- **`frank-review`** → `render_single_view` at a matched `rotation` to a temp path (call it once per canonical view for multiple angles). **Do NOT use `render_quad_views`** (see Capture POLICY — it deadlocks the server). Then `Read` the image file (ignore the inline `image_base64`) and compare to the reference via `frank-silhouette-critic`. Houdini renders to **files**, so capture = render-to-path → read file → clean the scaffolding nodes.
 
 ## ⟂ VALIDATE (confirm live, then compound)
 
