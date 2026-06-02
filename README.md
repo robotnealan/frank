@@ -42,21 +42,27 @@ LLM-driven CAD usually fails the same ways: hallucinated API calls, magic-number
 
 ## Agents
 
+Six agents ship today. `frank-fabrication-reviewer` (wall thickness, overhangs, watertightness, undercuts) is deferred to M5 with `knowledge/fabrication.md`.
+
 | Agent | Lens |
 |---|---|
-| `frank-silhouette-critic` | Adversarial visual comparison of captured views against the reference. |
+| `frank-silhouette-critic` | Adversarial visual comparison of captured views against the reference (dispatched on a vision-capable model). |
 | `frank-geometry-reviewer` | Units/scale, naked & non-manifold edges, self-intersection, degenerate faces, continuity. |
-| `frank-fabrication-reviewer` | Wall thickness, overhangs, watertightness, undercuts, real-world scale. |
 | `frank-parametric-architect` | Parameter-block design: named, validated, idempotent, no magic numbers. |
 | `frank-rhino-docs-researcher` | Confirms exact RhinoScript / RhinoCommon signatures via live MCP introspection. |
-| `frank-houdini-docs-researcher` | Confirms Houdini node/VEX usage. |
-| `frank-learnings-researcher` | Retrieves relevant past learnings before each plan/build. |
+| `frank-houdini-docs-researcher` | Confirms Houdini node / VEX usage via live MCP introspection. |
+| `frank-learnings-researcher` | Retrieves relevant past learnings from `docs/solutions/` before each plan/build. |
 
 ## Knowledge
 
-The durable craft canon, loaded as context by skills and agents. Authored with citations; principles that don't go stale. Volatile API signatures are deliberately *not* baked here — they're fetched live (see `references/`).
+The durable craft canon, loaded as context by skills and agents. Authored with citations; principles that don't go stale. Volatile API signatures are deliberately *not* baked here — they're fetched live (see `references/`). The canon grows by compounding: stubs are self-describing and named, so a `/frank-compound` learning always has a home to grow into.
 
-- `parametric-scripting.md`, `geometry-quality.md`, `fabrication.md`, `verification.md`
+| Canon pack | Status |
+|---|---|
+| `parametric-scripting.md` | ✅ Authored — named param blocks, idempotent scope-isolated rebuilds, guards that warn, determinism, units/tolerance. |
+| `verification.md` | ✅ Authored — which views to capture, pinned-camera discipline, silhouette comparison, geometric assertions, human acceptance. |
+| `geometry-quality.md` | 🚧 Stub — continuity, watertightness/manifoldness, mesh quality, self-intersection. Grows via `/frank-compound`. |
+| `fabrication.md` | 🚧 Stub — wall thickness, overhangs, watertight solids, tolerance/clearance, export hygiene. Lands with `frank-fabrication-reviewer` in M5. |
 
 ## Tool support
 

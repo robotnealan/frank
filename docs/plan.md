@@ -25,7 +25,7 @@ LLM-driven CAD fails in repeatable ways: hallucinated API signatures, magic-numb
 
 - **R1.** Installable as a Claude Code plugin (valid `.claude-plugin/plugin.json`; resolvable via a marketplace entry).
 - **R2.** A coherent skill workflow: `frank-setup`, `frank-plan`, `frank-build`, `frank-review`, `frank-compound`, invocable as slash commands.
-- **R3.** Reviewer/researcher **agents** that the skills spawn: silhouette-critic, geometry-reviewer, fabrication-reviewer, parametric-architect, rhino-docs-researcher, houdini-docs-researcher, learnings-researcher.
+- **R3.** Reviewer/researcher **agents** that the skills spawn. **Six ship today** (all `frank-`-prefixed): `frank-silhouette-critic`, `frank-geometry-reviewer`, `frank-parametric-architect`, `frank-rhino-docs-researcher`, `frank-houdini-docs-researcher`, `frank-learnings-researcher`. The 7th, `frank-fabrication-reviewer`, is **deferred to M5** with `knowledge/fabrication.md`.
 - **R4.** A three-layer **knowledge architecture** (below): authored canon, live API grounding, compounding memory.
 - **R5.** **Rhino** track fully validated against a live document this session; **Houdini** track ([`capoomgit/houdini-mcp`](https://github.com/capoomgit/houdini-mcp)) documented from source now and **validated live** once its MCP is connected to a session (Rob is setting it up).
 - **R6.** Every build the plugin produces is **idempotent, scope-isolated** (own layer/namespace), **re-runnable**, and driven by a **named parameter block** with **input validation/guards**.
@@ -38,11 +38,11 @@ LLM-driven CAD fails in repeatable ways: hallucinated API signatures, magic-numb
 How real expertise is instilled and grown — three layers:
 
 ### Layer 1 — The Canon (authored, durable craft)
-Curated knowledge packs of principles that don't go stale, loaded as context by skills/agents. Authored with **citations** to authoritative sources (McNeel/RhinoCommon, SideFX/Houdini, Pottmann *Architectural Geometry*, the Grasshopper Primer, *The Nature of Code*). Bootstrapped via a research-and-synthesis pass using researcher agents.
-- `knowledge/parametric-scripting.md` — named param blocks; no magic numbers; validation + guards that warn vs. emit broken geometry; idempotent, scope-isolated rebuilds; determinism (seed randomness); units/tolerance discipline; generator-vs-result separation; re-runnability.
-- `knowledge/geometry-quality.md` — continuity (G0/G1/G2), curve fairness, NURBS degree/knots, manifold/watertight, naked & non-manifold edges, degenerate faces, mesh density, curvature/zebra analysis.
-- `knowledge/fabrication.md` — wall thickness, overhangs/support, watertightness (print); kerf, tool access, undercuts (CNC/mold); real-world scale.
-- `knowledge/verification.md` — which views to capture, shaded vs. wireframe vs. curvature, silhouette comparison method, assertion patterns.
+Curated knowledge packs of principles that don't go stale, loaded as context by skills/agents. Authored with **citations** to authoritative sources (McNeel/RhinoCommon, SideFX/Houdini, Pottmann *Architectural Geometry*, the Grasshopper Primer, *The Nature of Code*). Bootstrapped via a research-and-synthesis pass using researcher agents. **The canon ships hybrid:** the two packs the skills lean on hardest are authored with citations; the other two are self-describing labeled stubs that grow via `frank-compound`, so a STOP-gate load always resolves to real orientation rather than emptiness.
+- `knowledge/parametric-scripting.md` — **✅ authored, cited.** Named param blocks; no magic numbers; validation + guards that warn vs. emit broken geometry; idempotent, scope-isolated rebuilds; determinism (seed randomness); units/tolerance discipline; generator-vs-result separation; re-runnability.
+- `knowledge/verification.md` — **✅ authored, cited.** Which views to capture, pinned-camera discipline, shaded vs. wireframe vs. curvature, silhouette comparison method, geometric-assertion patterns, human acceptance authority.
+- `knowledge/geometry-quality.md` — **🚧 stub.** Continuity (G0/G1/G2), curve fairness, NURBS degree/knots, manifold/watertight, naked & non-manifold edges, degenerate faces, mesh density, curvature/zebra analysis. Grows via `frank-compound`.
+- `knowledge/fabrication.md` — **🚧 stub.** Wall thickness, overhangs/support, watertightness (print); kerf, tool access, undercuts (CNC/mold); real-world scale. Authored in M5 with `frank-fabrication-reviewer`.
 
 ### Layer 2 — Live grounding (current API truth)
 **Author the stable craft; fetch the volatile API.** Primitive signatures are never baked into the canon — they're confirmed live so they can't rot or hallucinate. Rhino MCP already exposes introspection (`list_rhinoscript_modules`, `search_rhinoscript_functions`, `get_rhinoscript_docs`, `get_module_functions`); `frank-build` confirms signatures before writing code. `frank-rhino-docs-researcher` / `frank-houdini-docs-researcher` encapsulate this.
@@ -79,19 +79,19 @@ frank/
     frank-build/SKILL.md
     frank-review/SKILL.md
     frank-compound/SKILL.md
-  agents/
+  agents/                            # 6 ship; frank-fabrication-reviewer deferred to M5
     frank-silhouette-critic.agent.md
     frank-geometry-reviewer.agent.md
-    frank-fabrication-reviewer.agent.md
     frank-parametric-architect.agent.md
     frank-rhino-docs-researcher.agent.md
     frank-houdini-docs-researcher.agent.md
     frank-learnings-researcher.agent.md
+    # frank-fabrication-reviewer.agent.md  (M5)
   knowledge/
-    parametric-scripting.md
-    geometry-quality.md
-    fabrication.md
-    verification.md
+    parametric-scripting.md          # ✅ authored, cited
+    verification.md                  # ✅ authored, cited
+    geometry-quality.md              # 🚧 stub
+    fabrication.md                   # 🚧 stub
   references/
     rhino-mcp.md
     houdini-mcp.md                   # UNVALIDATED until confirmed
@@ -105,13 +105,13 @@ frank/
 ## Build Order (milestones)
 
 - **M0 — Skeleton** ✅ dirs, manifest, README, LICENSE, .gitignore, plan.
-- **M1 — Rhino spine (proven).** `frank-setup`, `frank-plan`, `frank-build`, `frank-review` + `references/rhino-mcp.md` + `frank-rhino-docs-researcher`. Validate end-to-end against the live Rhino document.
-- **M2 — Core agents.** silhouette-critic, geometry-reviewer, parametric-architect.
-- **M3 — Knowledge canon.** Author the four `knowledge/*.md` packs (research-and-synthesis pass, cited).
-- **M4 — Compounding.** `frank-compound` + `frank-learnings-researcher` + seed `docs/solutions/` with the three spiral learnings.
-- **M5 — Fabrication.** `fabrication-reviewer` + `knowledge/fabrication.md`.
-- **M6 — Houdini track.** `references/houdini-mcp.md` (✅ drafted from source) + `frank-houdini-docs-researcher` + `docs/houdini-setup.md`. **Validate live** once `mcp__houdini__*` tools are connected: run the smoke test (below), resolve the `⟂ VALIDATE` list in the reference pack, compound any surprises.
-- **M7 — Distribution.** `marketplace.json` entry, CHANGELOG, install docs; dogfood by rebuilding the spiral with frank end-to-end.
+- **M1 — Rhino spine (proven).** ✅ `frank-setup`, `frank-plan`, `frank-build`, `frank-review` + `references/rhino-mcp.md` + `frank-rhino-docs-researcher`. Live end-to-end validation against the Rhino document = the U13 dogfood.
+- **M2 — Core agents.** ✅ `frank-silhouette-critic`, `frank-geometry-reviewer`, `frank-parametric-architect`.
+- **M3 — Knowledge canon.** ◐ **Hybrid:** `parametric-scripting.md` + `verification.md` authored & cited; `geometry-quality.md` + `fabrication.md` shipped as labeled stubs (grow via `frank-compound`).
+- **M4 — Compounding.** ✅ `frank-compound` + `frank-learnings-researcher` + `docs/solutions/` seeded with the three spiral learnings.
+- **M5 — Fabrication.** ☐ Deferred. `frank-fabrication-reviewer` + full `knowledge/fabrication.md` (stub ships now).
+- **M6 — Houdini track.** ✅ (authored) `references/houdini-mcp.md` + `frank-houdini-docs-researcher` + `docs/houdini-setup.md`; MCP hardened & smoke-validated live this session (see `docs/solutions/2026-06-01_houdini-mcp-render-deadlock.md`). Full Houdini dogfood is the deferred half of U13.
+- **M7 — Distribution.** ◐ `.claude-plugin/marketplace.json` (local install for dogfood) + `CHANGELOG.md` ship now; broader marketplace publishing deferred. Dogfood (rebuild the spiral with frank end-to-end) = U13.
 
 ## Open Questions
 
