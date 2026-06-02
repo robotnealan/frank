@@ -73,7 +73,16 @@ The durable craft canon, loaded as context by skills and agents. Authored with c
 
 ## Installation
 
-_Marketplace publishing TBD. For local development, add this directory as a plugin source in Claude Code._
+**Local install** (until published to a public marketplace):
+
+```bash
+claude plugin marketplace add /path/to/frank      # registers frank-marketplace
+claude plugin install frank@frank-marketplace     # installs the plugin
+```
+
+Then run `/reload-plugins` in Claude Code to activate the skills and agents (no restart needed). Iterating on the plugin? Re-run `/reload-plugins` after edits.
+
+> The plugin's `marketplace.json` uses `"source": "./"` (plugin at the marketplace root). On Claude Code, a relative `source` must start with `./` — `"."` is rejected.
 
 ## License
 
