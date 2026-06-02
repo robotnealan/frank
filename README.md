@@ -7,7 +7,7 @@
 
 `frank` is a Claude Code plugin that turns a modeling MCP server into a disciplined design partner. It plans the form before touching geometry, builds it as a re-runnable parametric generator, reviews the result against your reference — and it's *frank* about what's wrong with your geometry.
 
-Named for Frank Gehry. Honest about your topology.
+Honest about your topology.
 
 ## Why
 
