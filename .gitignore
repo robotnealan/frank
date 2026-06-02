@@ -1,0 +1,9 @@
+.DS_Store
+node_modules/
+*.log
+.env
+.env.*
+# Rhino / Houdini scratch
+*.3dm.bak
+*.hiplc
+backup/

@@ -1,0 +1,24 @@
+{
+  "name": "frank",
+  "version": "0.1.0",
+  "description": "Plan, build, and review 3D models with Claude Code and modeling MCPs (Rhino, Houdini). Parametric, idempotent, and frank about your geometry.",
+  "author": {
+    "name": "Robert Nealan",
+    "email": "robertnealan@gmail.com"
+  },
+  "license": "MIT",
+  "keywords": [
+    "3d-modeling",
+    "cad",
+    "rhino",
+    "rhino3d",
+    "houdini",
+    "parametric",
+    "generative-design",
+    "computational-design",
+    "fabrication",
+    "mcp",
+    "rhinoscript",
+    "vex"
+  ]
+}
