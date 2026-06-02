@@ -82,7 +82,7 @@ claude plugin install frank@frank-marketplace     # installs the plugin
 
 Then run `/reload-plugins` in Claude Code to activate the skills and agents (no restart needed). Iterating on the plugin? Re-run `/reload-plugins` after edits.
 
-> The plugin's `marketplace.json` uses `"source": "./"` (plugin at the marketplace root). On Claude Code, a relative `source` must start with `./` — `"."` is rejected.
+> The plugin's `marketplace.json` uses `"source": "./"` (plugin at the marketplace root). On Claude Code, a relative `source` must start with `./` — `"."` is rejected. Full gotcha (incl. the `/reload-plugins` "0 skills" delta-counter and `disable-model-invocation` behavior): [`docs/solutions/2026-06-01_frank-plugin-local-marketplace-install.md`](docs/solutions/2026-06-01_frank-plugin-local-marketplace-install.md).
 
 ## License
 
